@@ -1,36 +1,76 @@
 <html lang="pt-br">
- <head>
-     <meta charset="utf-8">
-     <title>Interface para o interpretador da Linguagem</title>
-     <link rel="stylesheet" type="text/css" href="estilo.css">
- </head>
- <body>
-     <h1>Interface para o interpretador da Linguagem</h1>
-     <h3>Entrada</h3>
-     <p>Forneça a entrada para ser interpretada:</p>
-     <div>
-         <input type="text" id="entrada" name="entrada"> <button id="btn_calcular">Mover</button>
-     </div>
-     <br>
-     <h3>Saída</h3>
-     <div class="saida">
-         <div class="linha">
-            <div class="coluna" style="background-color:black;" ></div>
-            <div class="coluna" ></div>
-            <div class="coluna"></div>
-         </div>
 
-         <div class="linha">
-            <div class="coluna"></div>
-            <div class="coluna"></div>
-            <div class="coluna"></div>
-        </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Desenho</title>
 
-        <div class="linha">
-            <div class="coluna"></div>
-            <div class="coluna"></div>
-            <div class="coluna"></div>
-        </div>        
-     </div>
- </body>
+    <link href="public/css/estilo.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<script src="public/js/underscore-min.js"></script>
+	<script src="easy.js"></script>
+    <script src="diagram.js"></script>
+    
+    <link rel="stylesheet" href="public/css/codemirror.css">
+	<link rel="stylesheet" href="public/css/rubyblue.css">
+	<script src="public/js/codemirror.js"></script>
+	<script src="public/codemirror/js/active-line.js"></script>
+	<script src="public/codemirror/js/matchbrackets.js"></script>
+</head>
+
+<body>
+    <div class="editor">
+        <h1>Editor</h1>
+        <textarea id="texto" rows="2" cols="50"></textarea>
+    </div>
+    <div>
+        <button type="button" class="btn btn-primary" onclick="Rodar();">Rodar!</button>
+    </div>
+    <div class="Saida">
+        <h1>Saída</h1>
+        <canvas class="canvas" id="myCanvas" height= 220%; width= 514%;></canvas>
+    </div>
+
+    <img id="coco" width="32" height="32" src="public/img/coco.png" alt="The Scream" style="display:none">
+	<img id="desmarqueleste" width="32" height="32" src="public/img/desmarque.png" alt="The Scream" style="display:none">
+	<img id="desmarquenorte" width="32" height="32" src="public/img/desmarque_norte.png" alt="The Scream" style="display:none">
+	<img id="desmarqueoeste" width="32" height="32" src="public/img/desmarque_oeste.png" alt="The Scream" style="display:none">
+	<img id="desmarquesul" width="32" height="32" src="public/img/desmarque_sul.png" alt="The Scream" style="display:none">
+	<img id="marleyleste" width="32" height="32" src="public/img/marley.png" alt="The Scream" style="display:none">
+	<img id="marleynorte" width="32" height="32" src="public/img/marley_norte.png" alt="The Scream" style="display:none">
+	<img id="marleyoeste" width="32" height="32" src="public/img/marley_oeste.png" alt="The Scream" style="display:none">
+	<img id="marleysul" width="32" height="32" src="public/img/marley_sul.png" alt="The Scream" style="display:none">
+	<img id="marqueleste" width="32" height="32" src="public/img/marque.jpg" alt="The Scream" style="display:none">
+	<img id="marquenorte" width="32" height="32" src="public/img/marque_norte.png" alt="The Scream" style="display:none">
+	<img id="marqueoeste" width="32" height="32" src="public/img/marque_oeste.png" alt="The Scream" style="display:none">
+	<img id="marquesul" width="32" height="32" src="public/img/marque_sul.png" alt="The Scream" style="display:none">
+	<img id="mover" width="32" height="32" src="public/img/mover.png" alt="The Scream" style="display:none">
+	<img id="movernorte" width="32" height="32" src="public/img/mover_norte.png" alt="The Scream" style="display:none">
+	<img id="moveroeste" width="32" height="32" src="public/img/mover_oeste.png" alt="The Scream" style="display:none">
+	<img id="moversul" width="32" height="32" src="public/img/mover_sul.png" alt="The Scream" style="display:none">
+
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("texto"), {
+            lineNumbers: true,
+            styleActiveLine: true,
+            matchBrackets: true,
+            mode: "text/x-csrc"
+        });
+    
+        function Rodar() {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+    
+            ctx.clearRect(0, 0, c.width, c.height);
+    
+            var dados = editor.getValue();
+            var programa = Diagram.parse(dados, c);
+        }       
+    </script>
+</body>
+
 </html>
