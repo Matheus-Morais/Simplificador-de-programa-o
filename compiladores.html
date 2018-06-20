@@ -23,36 +23,32 @@
 </head>
 
 <body>
+    <h1 class="titulo" >Ajude Eric Cartman a tirar seus amigos da rua!</h1>
     <div class="editor">
         <h1>Editor</h1>
-        <textarea id="texto" rows="2" cols="50"></textarea>
+        <textarea id="texto" rows="2" cols="60"></textarea>
     </div>
     <div>
-        <button type="button" class="btn btn-primary" onclick="Rodar();">Rodar!</button>
+        <button type="button" class="btn btn-primary" onclick="Rodar();" >Rodar!</button>
     </div>
+
     <div class="Saida">
         <h1>Saída</h1>
-        <canvas class="canvas" id="myCanvas" height= 220%; width= 514%;></canvas>
+        <canvas class="canvas" id="myCanvas" height= 365%; width= 514%;></canvas>
     </div>
 
-    <img id="coco" width="32" height="32" src="public/img/coco.png" alt="The Scream" style="display:none">
-	<img id="desmarqueleste" width="32" height="32" src="public/img/desmarque.png" alt="The Scream" style="display:none">
-	<img id="desmarquenorte" width="32" height="32" src="public/img/desmarque_norte.png" alt="The Scream" style="display:none">
-	<img id="desmarqueoeste" width="32" height="32" src="public/img/desmarque_oeste.png" alt="The Scream" style="display:none">
-	<img id="desmarquesul" width="32" height="32" src="public/img/desmarque_sul.png" alt="The Scream" style="display:none">
-	<img id="marleyleste" width="32" height="32" src="public/img/marley.png" alt="The Scream" style="display:none">
-	<img id="marleynorte" width="32" height="32" src="public/img/marley_norte.png" alt="The Scream" style="display:none">
-	<img id="marleyoeste" width="32" height="32" src="public/img/marley_oeste.png" alt="The Scream" style="display:none">
-	<img id="marleysul" width="32" height="32" src="public/img/marley_sul.png" alt="The Scream" style="display:none">
-	<img id="marqueleste" width="32" height="32" src="public/img/marque.jpg" alt="The Scream" style="display:none">
-	<img id="marquenorte" width="32" height="32" src="public/img/marque_norte.png" alt="The Scream" style="display:none">
-	<img id="marqueoeste" width="32" height="32" src="public/img/marque_oeste.png" alt="The Scream" style="display:none">
-	<img id="marquesul" width="32" height="32" src="public/img/marque_sul.png" alt="The Scream" style="display:none">
-	<img id="mover" width="32" height="32" src="public/img/mover.png" alt="The Scream" style="display:none">
-	<img id="movernorte" width="32" height="32" src="public/img/mover_norte.png" alt="The Scream" style="display:none">
-	<img id="moveroeste" width="32" height="32" src="public/img/mover_oeste.png" alt="The Scream" style="display:none">
-	<img id="moversul" width="32" height="32" src="public/img/mover_sul.png" alt="The Scream" style="display:none">
+    <div class="comandos">
+        <p>Para mover o personagem: mover(x, y).</p>
+        <p>Para tirar o amiguinho da rua: irritar.</p>
+        <p>Localidade dos amigos: (100, 100), (200, 300), (300, 300) e (450, 100)</p>
+    </div>
 
+    <img id="butters" width="32" height="32" src="public/img/butters.png" alt="The Scream" style="display:none">
+    <img id="Kenny" width="32" height="32" src="public/img/Kenny.png" alt="The Scream" style="display:none">
+    <img id="Kyle" width="32" height="32" src="public/img/Kyle.png" alt="The Scream" style="display:none">
+    <img id="Stan" width="32" height="32" src="public/img/Stan.png" alt="The Scream" style="display:none">
+    <img id="cartman" width="32" height="32" src="public/img/cartman.png" alt="The Scream" style="display:none">
+    
     <script>
         var editor = CodeMirror.fromTextArea(document.getElementById("texto"), {
             lineNumbers: true,
@@ -60,16 +56,18 @@
             matchBrackets: true,
             mode: "text/x-csrc"
         });
-    
+
         function Rodar() {
             var c = document.getElementById("myCanvas");
             var ctx = c.getContext("2d");
     
             ctx.clearRect(0, 0, c.width, c.height);
-    
+            
             var dados = editor.getValue();
             var programa = Diagram.parse(dados, c);
-        }       
+            
+        }   
+        
     </script>
 </body>
 

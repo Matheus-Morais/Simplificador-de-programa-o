@@ -1,4 +1,3 @@
-
 function Diagram(c) {
     this.ponto = [];
 	//this.texto = texto;
@@ -11,114 +10,35 @@ function Diagram(c) {
     this.Dpoligono = [];
     this.Dquadri = [];
     this.Dtriangulo = [];
-    this.xx=Array();
-    this.yy=Array();
+    this.xx=Array(100, 200, 300, 450);
+    this.yy=Array(100, 300, 300, 100);
     this.DCirc = [];
     this.ETexto = [];
     this.img; 
     this.Dlinhas = [];
     this.EspCaneta = 3;
-     this.CorCaneta = "Black";
-     this.TipoLinha = 0;
-     this.Variaveis = Array();
-        this.metodos = Array();
-     this.Direcao = "leste";
+    this.CorCaneta = "Black";
+    this.TipoLinha = 0;
+    this.Variaveis = Array();
+    this.metodos = Array();
+    this.Direcao = "leste";
 }
 
-function DesenharLinhas(ctx,linhas,Esp,Cor)
-{
-    
-  for(var i=0; i<linhas.length;i++)
-   {     
-                ctx.moveTo(linhas[i][0],linhas[i][1]);
-                ctx.lineTo(linhas[i][2],linhas[i][3]);
-                ctx.lineWidth = Esp;
-                ctx.strokeStyle  = Cor;
-                ctx.stroke();
-   }
+
+
+function DesenharMarcas(xx,yy,ctx){
+    var array = ["butters", "Kenny", "Kyle", "Stan"];
+    for(var i=0; i<xx.length;i++){
+        ctx.drawImage(document.getElementById(array[0]), xx[i], yy[i], 32, 32);
+        var index = array.indexOf(array[0]);
+        array.splice(index, 1);
+    }
 }
 
-function DesenharLinhasPoli(ctx,linhas,Esp,Cor)
-{
-   
-                ctx.moveTo(linhas[0],linhas[1]);
-                ctx.lineTo(linhas[2],linhas[3]);
-                ctx.lineWidth = Esp;
-                ctx.strokeStyle  = Cor;
-                ctx.stroke();
-}
+function DesenhaCartman(ctx,x,y,imagem,dir){  
 
-function desenharPoligonos(ctx,poligono,Esp,Cor)
-{
-
-  for(var i=0; i<poligono.length;i++)
-   {    
-         for(var j=0; j<(poligono[i].length-1);j++)
-             {
-           
-                  DesenharLinhasPoli(ctx, [poligono[i][j][0],poligono[i][j][1],poligono[i][j+1][0],poligono[i][j+1][1]],Esp,Cor);    
-             }
-
-      DesenharLinhasPoli(ctx, [poligono[i][0][0],poligono[i][0][1],poligono[i][poligono[i].length-1][0],poligono[i][poligono[i].length-1][1]],Esp,Cor);   
-   }
-
-}
-function DesenharCirculos(ctx,circulos,Esp,Cor)
-{
-  for(var i=0; i<circulos.length;i++)
-   {
-        ctx.beginPath();
-       // ctx.fillStyle = "blue";
-        ctx.arc(circulos[i][0],circulos[i][1],circulos[i][2],0,2*Math.PI);
-        ctx.lineWidth = Esp;
-        ctx.strokeStyle  = Cor;
-        ctx.stroke();
-      //  ctx.fill();
-   }
-
-}
-
-function EscreverTexto(ctx,textos)
-{
-  for(var i=0; i<textos.length;i++)
-   {
-       
-            ctx.font="14px Georgia";
-            ctx.fillStyle = "green";
-            ctx.fillText(textos[i][0],textos[i][1],textos[i][2]);
-
-   }
-}
-
-function DesenharMarcas(xx,yy,ctx)
-{
-   for(var i=0; i<xx.length;i++)
-   {
-
-        ctx.drawImage(document.getElementById("coco"), xx[i], yy[i], 12, 12); 
-   }
-}
-
-function DesenhaMarley(ctx,x,y,imagem,dir)
-{
-       if(imagem == 1)
-       {        
-              var img = document.getElementById("marley"+dir);
-            
-       }else
-       {
-           if(imagem == 2)
-           {
-                var img = document.getElementById("marque"+dir);
-           }else
-           {
-               var img = document.getElementById("desmarque"+dir);
-           }
-            
-       }
-
+    var img = document.getElementById("cartman");
     ctx.drawImage(img, x-12, y-12, 32, 32);  
-
 }
 
 
@@ -174,9 +94,9 @@ Diagram.prototype.intepretador = function(dados) {
                  
                 //    console.log(dados.sentencas[x].params[0].value);            
                 }else{
-                    if(dados.sentencas[x].name=="CMD_DESMARQUE")
+                    if(dados.sentencas[x].name=="CMD_IRRITAR")
                     { 
-                        easy.yy.desmarque();            
+                        easy.yy.irritar();            
                     }
                     else{
                           if(dados.sentencas[x].name=="CMD_DESENHE_LINHA")
@@ -422,54 +342,15 @@ Diagram.prototype.desenharFormas = function() {
 
 
     DesenharMarcas(this.xx,this.yy,ctx);
-    desenharPoligonos(ctx,this.Dpoligono,this.EspCaneta,this.CorCaneta);
-    desenharPoligonos(ctx,this.Dquadri,this.EspCaneta,this.CorCaneta);
-    desenharPoligonos(ctx,this.Dtriangulo,this.EspCaneta,this.CorCaneta);
-    DesenharCirculos(ctx,this.DCirc, this.EspCaneta, this.CorCaneta);
-    DesenharLinhas(ctx,this.Dlinhas, this.EspCaneta, this.CorCaneta);
-    DesenhaMarley(ctx,this.x,this.y,this.img,this.Direcao);
-    EscreverTexto(ctx,this.ETexto);
+
+    DesenhaCartman(ctx,this.x,this.y,this.img,this.Direcao); 
     
 }
 
-Diagram.prototype.desenharCirculo = function(valor) {
-
-        var ctx = this.c.getContext("2d");
-
-      this.DCirc.push([this.x,this.y,valor]);
-   this.desenharFormas();
-
-console.log(valor);
-}
+Diagram.prototype.irritar = function() {
 
 
-Diagram.prototype.desenharQuadri = function(ponto1,ponto2,ponto3) {
-
-		easy.yy.Ponto3(ponto1[0].val,ponto1[1].val);
-        easy.yy.Ponto3(ponto2[0].val,ponto2[1].val);
-		easy.yy.Ponto3(ponto3[0].val,ponto3[1].val);
-      this.Dquadri.push(this.PPontos);
-      this.PPontos = [];
-
-       var ctx = this.c.getContext("2d");
-       desenharPoligonos(ctx,this.Dquadri,this.EspCaneta,this.CorCaneta);
-}
-
-Diagram.prototype.desenharTriangulo = function(ponto1,ponto2) {
-        easy.yy.Ponto3(ponto1[0].valponto1[1].val);
-        easy.yy.Ponto3(ponto2[0].val,ponto2[1].val);
-
-      this.Dtriangulo.push(this.PPontos);
-      this.PPontos = [];
-
-       var ctx = this.c.getContext("2d");
-       desenharPoligonos(ctx,this.Dtriangulo,this.EspCaneta,this.CorCaneta);
-}
-
-Diagram.prototype.desmarque = function() {
-
-
-this.img = 3;
+    this.img = 3;
 
  for(var i=0; i<this.xx.length;i++)
    {
@@ -482,6 +363,7 @@ this.img = 3;
    }
 
    this.desenharFormas();
+   
    
 }
 
@@ -511,23 +393,6 @@ Diagram.prototype.Ponto2 = function(x, y) {
 }
 
 
-Diagram.prototype.mudarEstilo = function(x) {
-    
-    $("#saidaText").html("Estilo Alterado para: "+x);
-  
-   if(x=="1")
-   {
-        this.TipoLinha = 1;
-   }else
-   {
-         if(x=="0"){
-             this.TipoLinha = 0;
-         }
-    }
-
-  
-}
-
 Diagram.prototype.Ponto3 = function(x, y) {
 if(this.PPontos.length==0)
 {
@@ -542,31 +407,6 @@ this.PPontos.push([x,y]);
 	
     return [x, y];
 }
-
-
-
-Diagram.prototype.validaLogica = function(x,z) {
-    
-   
-}
-
-Diagram.prototype.mudarEspessura = function(valor) {
- 
- this.EspCaneta = valor;
-  
-    $("#saidaText").html("Espessura Alterada para: "+ valor);
-}
-
-
-Diagram.prototype.mudarCor = function(valor) {
- valor = valor.replace('"',"");
- this.CorCaneta = valor.replace('"',"");
-
-   $("#saidaText").html("Cor da caneta alterada para: "+ this.CorCaneta);
-
-}
-
-
 
 Diagram.prototype.saida = function(valor) {
  valor = valor.replace('"',"");
@@ -583,139 +423,3 @@ Diagram.prototype.saida = function(valor) {
 Diagram.prototype.Logica = function(x) {
     $("#saidaText").html(x);   
 }
-
-Diagram.prototype.marcaAqui = function(x) {
-    if(x==1)
-    {
-
-            for(var i=0; i<this.xx.length;i++)
-            {
-                    if(this.xx[i]==this.x && this.yy[i]==this.y)
-                    { 
-                        //$("#saidaText").html("Não há uma marca em : ("+this.x+","+this.y+")");   
-                        return true;
-                      
-                        
-                    
-                    }
-                
-            }
-            return false;
-
-    }else
-    {
-
-            for(var i=0; i<this.xx.length;i++)
-            {
-                    if(this.xx[i]==this.x && this.yy[i]==this.y)
-                    { 
-                      //  $("#saidaText").html("Não há uma marca em : ("+this.x+","+this.y+")");   
-                        return false;
-                    
-                    }
-                
-            } 
-               return true;
-
-
-    }
-     
-}
-
-
-
-
-Diagram.prototype.marcaEm = function(x,ponto) {
-
-    if(x==1)
-    {
-
-            for(var i=0; i<this.xx.length;i++)
-            {
-                    if(this.xx[i]==ponto[0].val && this.yy[i]==ponto[1].val)
-                    { 
-                        return true;   
-                    
-                    }                
-            }
-				
-            return false;
-
-    }else
-    {
-		
-            for(var i=0; i<this.xx.length;i++)
-            {
-                     if(this.xx[i]==ponto[0].val && this.yy[i]==ponto[1].val)
-                    {                  
-									
-                        return false;                    
-                    }
-                
-            } 
-		
-               return true;
-
-    }
-     
-}
-
-
-
-
-
-
-Diagram.prototype.desenharPoligono = function(pontos) {
-	
-	easy.yy.Ponto3(pontos.value[0].value[0].val,pontos.value[0].value[1].val);
-		if(pontos.value[1]!= null)
-		{    
-            
-			easy.yy.desenharPoligono(pontos.value[1]);
-		}else
-		{
-						easy.yy.desenharPoligonoRe();
-		}
-        
-}
-
-
-Diagram.prototype.desenharPoligonoRe = function() {
-    
-	
-
-    this.Dpoligono.push(this.PPontos);
-    this.PPontos = [];
-
-       var ctx = this.c.getContext("2d");
-    desenharPoligonos(ctx,this.Dpoligono,this.EspCaneta,this.CorCaneta);
-
-}
-
-
-Diagram.prototype.memorizeVariavel = function(ex,vari) {
-    
-    vari = vari.replace('"',"");
-    vari = vari.replace('"',"");   
-console.log('dasd');
-this.Variaveis.push({nome:vari,valor:ex});
-
- $("#saidaText").html("Variável: '" + vari +"' contém o valor : "+ ex);
-
-}
-
-
-
-Diagram.prototype.mudarDirecao = function(ex) {
-
-
-this.Direcao = ex;
-this.desenharFormas();
-
-
-
-}
-
-
-
-
